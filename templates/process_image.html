@@ -7,30 +7,40 @@
     <title>Background Remover</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffebcd; /* NavajoWhite - because why not */
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
         }
 
         nav {
-            background-color: #333;
+            background-color: #ff6600; /* DarkOrange - a dash of warning */
             color: white;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
+            font-size: 1.5rem;
+            width: 100%;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 20px auto;
-            background-color: white;
+            background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
 
         h1 {
-            color: #333;
+            color: #ff6600; /* DarkOrange - matching the nav */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
 
         form {
@@ -39,34 +49,42 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            color: #333;
         }
 
         input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
+            padding: 10px;
+            margin-bottom: 20px;
             box-sizing: border-box;
+            background-color: #eee; /* LightGray - a soft touch */
+            border: 2px solid #ff6600; /* DarkOrange border */
+            border-radius: 8px;
+            color: #333;
         }
 
         button {
-            background-color: #007BFF;
+            background-color: #ff6600; /* DarkOrange - because caution! */
             color: white;
-            padding: 10px 20px;
+            padding: 14px 28px;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 1.4rem;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #e65c00; /* A slightly darker twist */
         }
 
         img {
             max-width: 100%;
             height: auto;
             margin-top: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         a button {
@@ -84,31 +102,27 @@
     </nav>
 
     <div class="container">
-        <h1>Remove Background From Image</h1>
+        <h1>AI Background Remover</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="input_image">Select Image:</label>
+            <label for="input_image">Choose an Image:</label>
             <input type="file" name="input_image" accept="image/*" required>
-            <button type="submit">Process Image</button>
+            <button type="submit">Vanish Background</button>
         </form>
 
         {% if output_image_base64 %}
-            <h2>Please Download it from here</h2>
+            <h2>Now, Please Download it!</h2>
             <img src="data:image/png;base64,{{ output_image_base64 }}" alt="Processed Image">
             <br>
-            {% comment %} <a href="{% url 'download_image' %}" download="output.png">
-                <button>Download</button>
-            </a> {% endcomment %}
         {% endif %}
 
         {% if output_image_base64 or request.method != 'POST' %}
             <div class="center">
                 <a href="{% url 'process_image' %}">
-                    <button>Process Another Image</button>
+                    <button>Click to Process Another Image</button>
                 </a>
             </div>
         {% endif %}
     </div>
 </body>
 </html>
-
